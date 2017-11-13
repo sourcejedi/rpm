@@ -929,12 +929,10 @@ static int rpmidxGetInternal(rpmidxdb idxdb, const unsigned char *key, unsigned 
 	    continue;
 	if ((nhits & 15) == 0) {
 	    if (!hits) {
-		hits = malloc(16 * sizeof(unsigned int));
+		hits = xmalloc(16 * sizeof(unsigned int));
 	    } else {
-		hits = realloc(hits, (nhits + 16) * sizeof(unsigned int));
+		hits = xrealloc(hits, (nhits + 16) * sizeof(unsigned int));
 	    }
-	    if (!hits)
-		return RPMRC_FAIL;
 	}
 	data = le2ha(ent + 4);
 	ovldata = (data & 0x80000000) ? le2ha(idxdb->slot_mapped + idxdb->nslots * 8 + 4 * h) : 0;
